@@ -9,7 +9,7 @@
  */
 async function callResasApi(
   url: string,
-  cache: number
+  cache: number,
 ): Promise<NonNullable<unknown>> {
   if (!process.env.RESAS_API_KEY) {
     throw new Error("Environment variable `RESAS_API_KEY` is missing");
@@ -31,7 +31,7 @@ async function callResasApi(
 
   const response = await fetch(
     `https://opendata.resas-portal.go.jp/${url}`,
-    options
+    options,
   );
 
   if (response.status !== 200) {
@@ -45,7 +45,7 @@ async function callResasApi(
   if (body.message !== null) {
     console.log(response);
     throw new Error(
-      "Failed to fetch RESAS-API: `message` is not null for status code 200"
+      "Failed to fetch RESAS-API: `message` is not null for status code 200",
     );
   }
 
