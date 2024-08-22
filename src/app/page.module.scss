@@ -6,3 +6,19 @@
   padding: 6rem;
   min-height: 100vh;
 }
+
+.prefecture-list {
+  display: flex;
+  align-items: flex-start;
+  align-content: space-around;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.prefecture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5em;
+  height: 2.5em;
+}
