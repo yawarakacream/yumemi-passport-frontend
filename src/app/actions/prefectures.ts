@@ -5,12 +5,14 @@ import {
   getResasPrefectures,
 } from "@/app/actions/resas";
 
-const POPULATION_LABELS = [
+const populationLabels = [
   "総人口",
   "年少人口",
   "生産年齢人口",
   "老年人口",
 ] as const;
+
+export type PopulationLabel = (typeof populationLabels)[number];
 
 /**
  * 都道府県
@@ -21,7 +23,7 @@ export interface Prefecture {
   population: {
     boundaryYear: number; // 実績値と推計値の区切り年
     data: {
-      [label in (typeof POPULATION_LABELS)[number]]: {
+      [label in PopulationLabel]: {
         year: number;
         value: number;
         rate?: number;
@@ -40,7 +42,7 @@ const isPrefecturePopulationData = (
   if (entries.length !== 4) return false;
   if (
     !entries.every(([label, data]) => {
-      if (!POPULATION_LABELS.includes(label as any)) return false;
+      if (!populationLabels.includes(label as any)) return false;
 
       if (!Array.isArray(data)) return false;
       if (
@@ -88,11 +90,11 @@ export async function getPrefectures(): Promise<Prefecture[]> {
             throw new Error(`Duplicate labels: ${curr}`);
           }
 
-          if (!POPULATION_LABELS.includes(curr.label as any)) {
+          if (!populationLabels.includes(curr.label as any)) {
             return acc;
           }
 
-          acc[curr.label as (typeof POPULATION_LABELS)[number]] = curr.data;
+          acc[curr.label as (typeof populationLabels)[number]] = curr.data;
 
           return acc;
         },
