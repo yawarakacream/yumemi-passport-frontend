@@ -30,31 +30,6 @@ export interface Prefecture {
   };
 }
 
-const isPrefecture = (object: unknown): object is Prefecture => {
-  if (object === null) return false;
-  if (typeof object !== "object") return false;
-
-  if (!("code" in object)) return false;
-  if (typeof object.code !== "number") return false;
-
-  if (!("name" in object)) return false;
-  if (typeof object.name !== "string") return false;
-
-  if (!("population" in object)) return false;
-  if (object.population === null) return false;
-  if (typeof object.population !== "object") return false;
-
-  {
-    if (!("boundaryYear" in object.population)) return false;
-    if (typeof object.population.boundaryYear !== "number") return false;
-
-    if (!("data" in object.population)) return false;
-    if (!isPrefecturePopulationData(object.population.data)) return false;
-  }
-
-  return true;
-};
-
 const isPrefecturePopulationData = (
   object: unknown,
 ): object is Prefecture["population"]["data"] => {
@@ -138,10 +113,6 @@ export async function getPrefectures(): Promise<Prefecture[]> {
           data: populationData,
         },
       };
-
-      if (!isPrefecture(prefecture)) {
-        throw new Error(`Invalid prefecture: ${JSON.stringify(prefecture)}`);
-      }
 
       return prefecture;
     }),
