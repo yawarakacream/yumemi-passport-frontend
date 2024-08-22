@@ -85,3 +85,95 @@ const isResasPrefecture = (object: unknown): object is ResasPrefecture => {
 
   return true;
 };
+
+/**
+ * @todo パラメータ `addArea` に対応する
+ * @see https://opendata.resas-portal.go.jp/docs/api/v1/population/composition/perYear.html
+ */
+export async function getResasPopulationCompositionPerYear(
+  prefCode: number,
+  cityCode: number | "-" = "-",
+): Promise<ResasPopulationCompositionPerYear> {
+  const pcpy = await callResasApi(
+    "/api/v1/population/composition/perYear",
+    { prefCode, cityCode },
+    1,
+  ); // 1 日間キャッシュ
+
+  if (!isResasPopulationCompositionPerYear(pcpy)) {
+    throw new Error(
+      `Invalid ResasPopulationCompositionPerYear: ${JSON.stringify(pcpy)}`,
+    );
+  }
+
+  return pcpy;
+}
+
+export interface ResasPopulationCompositionPerYear {
+  boundaryYear: number; // 実績値と推計値の区切り年
+  data: [
+    {
+      label: string;
+      data: [
+        {
+          year: number;
+          value: number;
+          rate?: number;
+        },
+      ];
+    },
+  ];
+}
+
+const isResasPopulationCompositionPerYear = (
+  object: unknown,
+): object is ResasPopulationCompositionPerYear => {
+  if (object === null) return false;
+  if (typeof object !== "object") return false;
+
+  if (!("boundaryYear" in object)) return false;
+  if (typeof object.boundaryYear !== "number") return false;
+
+  if (!("data" in object)) return false;
+  if (!Array.isArray(object.data)) return false;
+
+  if (
+    !object.data.every((object: unknown) => {
+      if (object === null) return false;
+      if (typeof object !== "object") return false;
+
+      if (!("label" in object)) return false;
+      if (typeof object.label !== "string") return false;
+
+      if (!("data" in object)) return false;
+      if (!Array.isArray(object.data)) return false;
+
+      if (
+        !object.data.every((object: unknown) => {
+          if (object === null) return false;
+          if (typeof object !== "object") return false;
+
+          if (!("year" in object)) return false;
+          if (typeof object.year !== "number") return false;
+
+          if (!("value" in object)) return false;
+          if (typeof object.value !== "number") return false;
+
+          if ("rate" in object) {
+            if (typeof object.rate !== "number") return false;
+          }
+
+          return true;
+        })
+      ) {
+        return false;
+      }
+
+      return true;
+    })
+  ) {
+    return false;
+  }
+
+  return true;
+};
