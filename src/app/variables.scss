@@ -1,7 +1,11 @@
 $foreground-rgb: rgb(0, 0, 0);
 $background-rgb: rgb(255, 255, 255);
 
+$border-color: rgb(128, 128, 128);
+
 @media (prefers-color-scheme: dark) {
   $foreground-rgb: rgb(255, 255, 255);
   $background-rgb: rgb(0, 0, 0);
+
+  $border-color: rgb(255, 255, 255);
 }
