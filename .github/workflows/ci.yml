@@ -22,3 +22,5 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm run build
+        env:
+          super_secret: ${{ secrets.RESAS_API_KEY }}
