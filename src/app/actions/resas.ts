@@ -8,11 +8,12 @@
  * @returns レスポンスの `result`
  */
 async function callResasApi(
-  url: string,
+  endpoint: `/api/${string}`,
+  parameters: { [key: string]: any },
   cache: number,
 ): Promise<NonNullable<unknown>> {
   if (!process.env.RESAS_API_KEY) {
-    throw new Error("Environment variable `RESAS_API_KEY` is missing");
+    throw new Error(`Environment variable "RESAS_API_KEY" is missing`);
   }
 
   const options: Partial<RequestInit> = {
@@ -29,28 +30,23 @@ async function callResasApi(
     options.next.revalidate = Number.isFinite(cache) ? cache : false;
   }
 
-  const response = await fetch(
-    `https://opendata.resas-portal.go.jp/${url}`,
-    options,
-  );
-
-  if (response.status !== 200) {
-    console.log(response);
-    throw new Error("Failed to fetch RESAS-API");
-  }
+  const query = new URLSearchParams(parameters);
+  const url = `https://opendata.resas-portal.go.jp${endpoint}?${query}`;
+  const response = await fetch(url, options);
 
   const body = await response.json();
 
-  // 200 のときは message は常に null っぽい
+  // body.message === null ならば正常
   if (body.message !== null) {
-    console.log(response);
     throw new Error(
-      "Failed to fetch RESAS-API: `message` is not null for status code 200",
+      `Failed to fetch RESAS-API: url=${url}, body=${JSON.stringify(body)}`,
     );
   }
 
   if (body.result === undefined || body.result === null) {
-    throw new Error("Failed to fetch RESAS-API: `result` is missing");
+    throw new Error(
+      `Failed to fetch RESAS-API: "result" is missing: url=${url}, body=${JSON.stringify(body)}`,
+    );
   }
 
   return body.result;
@@ -60,10 +56,14 @@ async function callResasApi(
  * @see https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
  */
 export async function getResasPrefectures(): Promise<ResasPrefecture[]> {
-  const prefectures = await callResasApi("api/v1/prefectures", 60 * 60 * 24); // 1 日間キャッシュ
+  const prefectures = await callResasApi(
+    "/api/v1/prefectures",
+    {},
+    60 * 60 * 24,
+  ); // 1 日間キャッシュ
 
   if (!Array.isArray(prefectures)) throw new Error();
-  if (!prefectures.every((p) => isResasPrefecture(p))) console.log(prefectures);
+  if (!prefectures.every((p) => isResasPrefecture(p))) throw new Error();
 
   return prefectures;
 }
