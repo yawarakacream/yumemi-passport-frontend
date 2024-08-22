@@ -1,0 +1,7 @@
+$foreground-rgb: rgb(0, 0, 0);
+$background-rgb: rgb(255, 255, 255);
+
+@media (prefers-color-scheme: dark) {
+  $foreground-rgb: rgb(255, 255, 255);
+  $background-rgb: rgb(0, 0, 0);
+}
