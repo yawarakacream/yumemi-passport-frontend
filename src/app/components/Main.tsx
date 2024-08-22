@@ -5,8 +5,13 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { DeepReadonly } from "@/utility/types";
 
 import { Prefecture } from "../actions/prefectures";
-import styles from "./Main.module.scss";
 import PrefectureButton from "./PrefectureButton";
+import PopulationGraph from "./PopulationGraph";
+import styles from "./Main.module.scss";
+
+export interface PrefectureForPlot extends Prefecture {
+  plot: boolean;
+}
 
 interface Props {
   prefectures: DeepReadonly<Prefecture[]>;
@@ -14,7 +19,7 @@ interface Props {
 
 export default memo(function Main({ prefectures: prefectures_ }: Props) {
   const [prefectures, setPrefectures] = useState<
-    DeepReadonly<(Prefecture & { plot: boolean })[]>
+    DeepReadonly<PrefectureForPlot[]>
   >([]);
 
   useEffect(() => {
@@ -44,6 +49,9 @@ export default memo(function Main({ prefectures: prefectures_ }: Props) {
           </li>
         ))}
       </ul>
+      <div className={styles["population-graph-wrapper"]}>
+        <PopulationGraph populationLabel="総人口" prefectures={prefectures} />
+      </div>
     </main>
   );
 });
