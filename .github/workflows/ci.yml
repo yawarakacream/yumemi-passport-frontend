@@ -23,4 +23,4 @@ jobs:
       - run: npm run format:check
       - run: npm run build
         env:
-          super_secret: ${{ secrets.RESAS_API_KEY }}
+          RESAS_API_KEY: ${{ secrets.RESAS_API_KEY }}
