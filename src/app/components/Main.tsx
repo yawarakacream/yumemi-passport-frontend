@@ -24,7 +24,7 @@ export default memo(function Main({ prefectures: prefectures_ }: Props) {
   const onPrefectureButtonClick = useCallback((prefCode: number) => {
     setPrefectures((prefectures) => {
       return prefectures.map((pref) => {
-        if (pref.prefCode !== prefCode) return pref;
+        if (pref.code !== prefCode) return pref;
         return { ...pref, plot: !pref.plot };
       });
     });
@@ -33,11 +33,11 @@ export default memo(function Main({ prefectures: prefectures_ }: Props) {
   return (
     <main className={styles["main"]}>
       <ul className={styles["prefecture-list"]}>
-        {prefectures.map(({ prefCode, prefName, plot }) => (
-          <li key={prefCode} className={styles["prefecture"]}>
+        {prefectures.map(({ code, name, plot }) => (
+          <li key={code} className={styles["prefecture"]}>
             <PrefectureButton
-              prefCode={prefCode}
-              prefName={prefName}
+              prefCode={code}
+              prefName={name}
               checked={plot}
               onClick={onPrefectureButtonClick}
             />
