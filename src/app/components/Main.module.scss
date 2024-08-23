@@ -1,8 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 2em;
   padding: 6rem;
   min-height: 100vh;
 }
@@ -21,4 +22,9 @@
   justify-content: center;
   width: 5em;
   height: 2.5em;
+}
+
+.population-graph-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 0.5;
 }
