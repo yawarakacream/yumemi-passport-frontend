@@ -56,7 +56,6 @@ export default memo(function PopulationGraph({
 
         if (lastActualYs !== undefined) {
           predYs[yearOfLastActualYs.toString()] = lastActualYs;
-          console.log(yearOfLastActualYs);
         }
 
         // 実績値を予測値の上に重ねる
