@@ -2,10 +2,11 @@
 
 import { memo, useCallback, useEffect, useState } from "react";
 
+import BasicRadioButtons from "@/components/BasicRadioButtons";
 import { randInt } from "@/utility/math";
 import { DeepReadonly } from "@/utility/types";
 
-import { Prefecture } from "../actions/prefectures";
+import { PopulationLabel, Prefecture } from "../actions/prefectures";
 import PrefectureButton from "./PrefectureButton";
 import PopulationGraph from "./PopulationGraph";
 import styles from "./Main.module.scss";
@@ -17,12 +18,19 @@ export interface PrefectureForPlot extends Prefecture {
 
 interface Props {
   prefectures: DeepReadonly<Prefecture[]>;
+  populationLabels: DeepReadonly<PopulationLabel[]>;
 }
 
-export default memo(function Main({ prefectures: prefectures_ }: Props) {
+export default memo(function Main({
+  prefectures: prefectures_,
+  populationLabels,
+}: Props) {
   const [prefectures, setPrefectures] = useState<
     DeepReadonly<PrefectureForPlot[]>
   >([]);
+
+  const [currentPopulationLabel, setCurrentPopulationLabel] =
+    useState<PopulationLabel>(populationLabels[0]);
 
   useEffect(() => {
     setPrefectures(
@@ -58,8 +66,18 @@ export default memo(function Main({ prefectures: prefectures_ }: Props) {
           </li>
         ))}
       </ul>
+      <div className={styles["population-label-selector-wrapper"]}>
+        <BasicRadioButtons
+          current={currentPopulationLabel}
+          choices={populationLabels}
+          onChange={setCurrentPopulationLabel}
+        />
+      </div>
       <div className={styles["population-graph-wrapper"]}>
-        <PopulationGraph populationLabel="総人口" prefectures={prefectures} />
+        <PopulationGraph
+          populationLabel={currentPopulationLabel}
+          prefectures={prefectures}
+        />
       </div>
     </main>
   );
