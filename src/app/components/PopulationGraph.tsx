@@ -54,6 +54,8 @@ export default memo(function PopulationGraph({
           }
         });
 
+        // 実績値から予測値へ破線を繋げるために
+        // 実績値の最後の値を予測値に入れる
         if (lastActualYs !== undefined) {
           predYs[yearOfLastActualYs.toString()] = lastActualYs;
         }
