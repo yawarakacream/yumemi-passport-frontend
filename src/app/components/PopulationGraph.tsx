@@ -1,7 +1,6 @@
-import { memo, useEffect, useState } from "react";
-import Highcharts from "highcharts";
-import { HighchartsReact } from "highcharts-react-official";
+import { ComponentProps, memo, useCallback, useEffect, useState } from "react";
 
+import LineChart, { LineChartSeries } from "@/components/LineChart";
 import { DeepReadonly } from "@/utility/types";
 
 import { PopulationLabel } from "../actions/prefectures";
@@ -16,46 +15,68 @@ export default memo(function PopulationGraph({
   populationLabel,
   prefectures,
 }: Props) {
-  const [chartOptions, setChartOptions] = useState<Highcharts.Options>();
+  const [chartOptions, setChartOptions] = useState<
+    DeepReadonly<{
+      xs: ComponentProps<typeof LineChart>["xs"];
+      series: ComponentProps<typeof LineChart>["series"];
+    }>
+  >();
 
   useEffect(() => {
-    const xAxis: Highcharts.Options["xAxis"] = [];
-    const series: Highcharts.Options["series"] = [];
+    const xs: Set<string> = new Set();
+    const series: LineChartSeries[] = [];
 
     prefectures
       .filter((pref) => pref.plot)
       .forEach((pref) => {
         const data = pref.population.data[populationLabel];
-        const xs = data.map(({ year }) => `${year}`);
-        const ys = data.map(({ value }) => value);
 
-        xAxis.push({
-          categories: xs,
-          lineWidth: 0,
+        const actualYs: { [x in string]?: number } = {};
+        const predYs: { [x in string]?: number } = {};
+
+        let lastActualYs: number | undefined = undefined;
+        let yearOfLastActualYs = -1;
+
+        data.forEach(({ year, value }) => {
+          const x = year.toString();
+          xs.add(x);
+
+          const y = value;
+          if (year <= pref.population.boundaryYear) {
+            actualYs[x] = y;
+
+            if (yearOfLastActualYs < year) {
+              lastActualYs = y;
+              yearOfLastActualYs = year;
+            }
+          } else {
+            predYs[x] = y;
+          }
+        });
+
+        if (lastActualYs !== undefined) {
+          predYs[yearOfLastActualYs.toString()] = lastActualYs;
+          console.log(yearOfLastActualYs);
+        }
+
+        // 実績値を予測値の上に重ねる
+        series.push({
+          name: `${pref.name} (予測値)`,
+          ys: predYs,
+          color: pref.color,
+          lineStyle: "dash",
         });
         series.push({
           name: pref.name,
-          type: "line",
-          data: ys,
+          ys: actualYs,
+          color: pref.color,
         });
       });
 
-    setChartOptions({
-      title: undefined,
-      xAxis,
-      yAxis: {
-        title: undefined,
-        labels: {
-          formatter: (ctx) => ctx.value.toLocaleString(),
-        },
-      },
-      series,
-    });
+    setChartOptions({ xs: Array.from(xs), series });
   }, [populationLabel, prefectures]);
 
-  return (
-    chartOptions && (
-      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-    )
-  );
+  const formatY = useCallback((y: number) => y.toLocaleString(), []);
+
+  return chartOptions && <LineChart formatY={formatY} {...chartOptions} />;
 });
