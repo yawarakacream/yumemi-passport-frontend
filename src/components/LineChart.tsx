@@ -116,7 +116,7 @@ export default memo(function LineChart({
         },
       },
     });
-  }, [xs, series]);
+  }, [xs, series, formatY]);
 
   return (
     <div className={styles["container"]}>
