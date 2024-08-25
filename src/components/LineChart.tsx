@@ -26,12 +26,16 @@ interface Props {
   xs: DeepReadonly<string[]>;
   series: DeepReadonly<LineChartSeries[]>;
   formatY?: (y: number) => string;
+  xUnit?: string;
+  yUnit?: string;
 }
 
 export default memo(function LineChart({
   xs,
   series,
   formatY = (y) => y.toString(),
+  xUnit,
+  yUnit,
 }: Props) {
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>();
 
@@ -49,28 +53,54 @@ export default memo(function LineChart({
       {} as { [key in string]: number },
     );
 
+    const style: Highcharts.CSSObject = {
+      fontSize: "1rem",
+      fontFamily: "monospace",
+      color: "rgb(var(--foreground-rgb))",
+    };
+
+    // TODO: マジックナンバーばかりなのでなんとかする
     setChartOptions({
       title: undefined,
+      chart: {
+        marginTop: 48,
+      },
       legend: {
         enabled: false,
       },
       xAxis: {
         categories: [...xs],
+        title:
+          xUnit === undefined
+            ? undefined
+            : {
+                text: `[${xUnit}]`,
+                align: "high",
+                x: -8,
+                y: -1,
+                style,
+              },
         lineWidth: 0,
         labels: {
-          style: {
-            fontSize: "1em",
-            color: "rgb(var(--foreground-rgb))",
-          },
+          style,
         },
       },
       yAxis: {
-        title: undefined,
+        title:
+          yUnit === undefined
+            ? undefined
+            : {
+                text: `[${yUnit}]`,
+                align: "high",
+                margin: 0,
+                offset: 0,
+                rotation: 0,
+                x: -12,
+                y: -24,
+                style,
+              },
         labels: {
-          style: {
-            fontSize: "1em",
-            color: "rgb(var(--foreground-rgb))",
-          },
+          style,
           formatter: function () {
             if (typeof this.value !== "number") {
               throw new Error(`Invalid y given: ${this.value}`);
@@ -110,17 +140,21 @@ export default memo(function LineChart({
         }),
       ),
       tooltip: {
-        style: {
-          fontSize: "1em",
-          color: "rgb(var(--foreground-rgb))",
-        },
+        style,
         formatter: function () {
           if (this.point.y === undefined) return;
-          return `<strong>${this.series.name}</strong><br />${formatY(this.point.y)}`;
+
+          let displayX = xs[this.point.x];
+          if (xUnit !== undefined) displayX += ` ${xUnit}`;
+
+          let displayY = formatY(this.point.y);
+          if (yUnit !== undefined) displayY += ` ${yUnit}`;
+
+          return `<strong>${this.series.name}</strong><br />${displayX} : ${displayY}`;
         },
       },
     });
-  }, [xs, series, formatY]);
+  }, [xs, series, formatY, xUnit, yUnit]);
 
   return (
     <div className={styles["container"]}>

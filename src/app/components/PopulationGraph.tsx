@@ -81,5 +81,9 @@ export default memo(function PopulationGraph({
 
   const formatY = useCallback((y: number) => y.toLocaleString(), []);
 
-  return chartOptions && <LineChart formatY={formatY} {...chartOptions} />;
+  return (
+    chartOptions && (
+      <LineChart formatY={formatY} xUnit="年" yUnit="人" {...chartOptions} />
+    )
+  );
 });
