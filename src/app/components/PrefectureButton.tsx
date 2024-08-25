@@ -1,3 +1,5 @@
+"use client";
+
 import { memo, useCallback } from "react";
 
 import styles from "./PrefectureButton.module.scss";
