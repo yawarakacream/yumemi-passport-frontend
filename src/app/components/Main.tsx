@@ -4,7 +4,7 @@ import { memo, useCallback, useEffect, useState } from "react";
 
 import BasicRadioButtons from "@/components/BasicRadioButtons";
 import { randInt } from "@/utilities/math";
-import { DeepReadonly } from "@/utilities/types";
+import { DeepReadonly } from "@/utilities/typing";
 
 import { PopulationLabel, Prefecture } from "../../prefectures/prefectures";
 import PrefectureButton from "./PrefectureButton";
