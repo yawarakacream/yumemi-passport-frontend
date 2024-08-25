@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-import BasicButton from "@/components/BasicButton";
+import styles from "./PrefectureButton.module.scss";
 
 interface Props {
   prefCode: number;
@@ -22,8 +22,12 @@ export default memo(function PrefectureButton({
   }, [onClick_, prefCode]);
 
   return (
-    <BasicButton onClick={onClick} background={checked ? prefColor : "white"}>
+    <button
+      className={styles["container"]}
+      style={{ background: checked ? prefColor : "none" }}
+      onClick={onClick}
+    >
       {prefName}
-    </BasicButton>
+    </button>
   );
 });

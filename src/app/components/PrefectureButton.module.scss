@@ -1,0 +1,5 @@
+@use "@/components/BasicButton.scss";
+
+.container {
+  @include BasicButton.basic-button;
+}
