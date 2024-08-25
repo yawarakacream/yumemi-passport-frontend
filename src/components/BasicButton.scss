@@ -1,6 +1,6 @@
 @use "@/app/variables.scss" as *;
 
-.container {
+@mixin basic-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,6 @@
   border-radius: 9999px;
   line-height: 1;
   overflow: hidden;
-  background: none;
 
   cursor: pointer;
 }

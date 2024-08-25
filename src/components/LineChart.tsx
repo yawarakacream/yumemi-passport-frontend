@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
 
-import { DeepReadonly } from "@/utility/types";
+import { DeepReadonly } from "@/utilities/typing";
 
 import styles from "./LineChart.module.scss";
 

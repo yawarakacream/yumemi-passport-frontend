@@ -3,12 +3,12 @@
 import { memo, useCallback, useEffect, useState } from "react";
 
 import BasicRadioButtons from "@/components/BasicRadioButtons";
-import { randInt } from "@/utility/math";
-import { DeepReadonly } from "@/utility/types";
+import { randInt } from "@/utilities/math";
+import { DeepReadonly } from "@/utilities/typing";
 
-import { PopulationLabel, Prefecture } from "../actions/prefectures";
-import PrefectureButton from "./PrefectureButton";
+import { PopulationLabel, Prefecture } from "../../prefectures/prefectures";
 import PopulationGraph from "./PopulationGraph";
+import PrefectureButton from "./PrefectureButton";
 import styles from "./Main.module.scss";
 
 export interface PrefectureForPlot extends Prefecture {

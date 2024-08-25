@@ -1,11 +1,9 @@
-"use server";
-
 import {
   getResasPopulationCompositionPerYear,
   getResasPrefectures,
-} from "@/app/actions/resas";
+} from "./resas";
 
-const populationLabels = [
+export const populationLabels = [
   "総人口",
   "年少人口",
   "生産年齢人口",
