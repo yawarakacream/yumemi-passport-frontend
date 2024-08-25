@@ -1,4 +1,14 @@
-@use "@/app/variables.scss" as *;
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+
+  --general-primary-color-rgb: 255, 119, 143;
+
+  @media (prefers-color-scheme: dark) {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
+}
 
 * {
   box-sizing: border-box;
@@ -16,8 +26,8 @@ body {
 }
 
 body {
-  color: $foreground-rgb;
-  background: $background-rgb;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
 }
 
 @media (prefers-color-scheme: dark) {

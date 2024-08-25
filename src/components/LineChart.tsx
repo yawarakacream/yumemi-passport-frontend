@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import Highcharts from "highcharts";
+import "highcharts/css/highcharts.css";
 import { HighchartsReact } from "highcharts-react-official";
 
 import { DeepReadonly } from "@/utilities/typing";
@@ -59,6 +60,7 @@ export default memo(function LineChart({
         labels: {
           style: {
             fontSize: "1em",
+            color: "rgb(var(--foreground-rgb))",
           },
         },
       },
@@ -67,6 +69,7 @@ export default memo(function LineChart({
         labels: {
           style: {
             fontSize: "1em",
+            color: "rgb(var(--foreground-rgb))",
           },
           formatter: function () {
             if (typeof this.value !== "number") {
@@ -109,6 +112,7 @@ export default memo(function LineChart({
       tooltip: {
         style: {
           fontSize: "1em",
+          color: "rgb(var(--foreground-rgb))",
         },
         formatter: function () {
           if (this.point.y === undefined) return;
