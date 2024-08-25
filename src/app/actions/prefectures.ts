@@ -32,7 +32,7 @@ export interface Prefecture {
   };
 }
 
-const isPrefecturePopulationData = (
+export const isPrefecturePopulationData = (
   object: unknown,
 ): object is Prefecture["population"]["data"] => {
   if (object === null) return false;
