@@ -1,7 +1,7 @@
 import { ComponentProps, memo, useCallback, useEffect, useState } from "react";
 
 import LineChart, { LineChartSeries } from "@/components/LineChart";
-import { DeepReadonly } from "@/utility/types";
+import { DeepReadonly } from "@/utilities/types";
 
 import { PopulationLabel } from "../../prefectures/prefectures";
 import { PrefectureForPlot } from "./Main";
