@@ -1,9 +1,7 @@
-"use server";
-
 import {
   getResasPopulationCompositionPerYear,
   getResasPrefectures,
-} from "@/app/actions/resas";
+} from "@/prefectures/resas";
 
 const populationLabels = [
   "総人口",

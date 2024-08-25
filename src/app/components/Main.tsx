@@ -6,7 +6,7 @@ import BasicRadioButtons from "@/components/BasicRadioButtons";
 import { randInt } from "@/utility/math";
 import { DeepReadonly } from "@/utility/types";
 
-import { PopulationLabel, Prefecture } from "../actions/prefectures";
+import { PopulationLabel, Prefecture } from "../../prefectures/prefectures";
 import PrefectureButton from "./PrefectureButton";
 import PopulationGraph from "./PopulationGraph";
 import styles from "./Main.module.scss";
