@@ -1,4 +1,4 @@
-import { isPrefecturePopulationData, Prefecture } from "./prefectures";
+import { isPrefecturePopulationData } from "./prefectures";
 
 describe("isPrefecturePopulationData", () => {
   it("成功例", () => {

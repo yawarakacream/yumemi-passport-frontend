@@ -7,8 +7,8 @@ import { randInt } from "@/utilities/math";
 import { DeepReadonly } from "@/utilities/typing";
 
 import { PopulationLabel, Prefecture } from "../../prefectures/prefectures";
-import PrefectureButton from "./PrefectureButton";
 import PopulationGraph from "./PopulationGraph";
+import PrefectureButton from "./PrefectureButton";
 import styles from "./Main.module.scss";
 
 export interface PrefectureForPlot extends Prefecture {
