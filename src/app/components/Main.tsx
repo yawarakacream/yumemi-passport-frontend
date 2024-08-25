@@ -21,6 +21,8 @@ interface Props {
   populationLabels: DeepReadonly<PopulationLabel[]>;
 }
 
+const prefecturesPlottedByDefault = ["東京都"];
+
 export default memo(function Main({
   prefectures: prefectures_,
   populationLabels,
@@ -37,7 +39,7 @@ export default memo(function Main({
       prefectures_.map((pref) => ({
         ...pref,
         color: `hsl(${randInt(0, 360 + 1)}, ${randInt(0, 30 + 1) + 70}%, ${randInt(0, 20 + 1) + 50}%)`,
-        plot: false,
+        plot: prefecturesPlottedByDefault.includes(pref.name),
       })),
     );
   }, [prefectures_]);
