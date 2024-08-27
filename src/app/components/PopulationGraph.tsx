@@ -79,11 +79,20 @@ export default memo(function PopulationGraph({
     setChartOptions({ xs: Array.from(xs), series });
   }, [populationLabel, prefectures]);
 
-  const formatY = useCallback((y: number) => y.toLocaleString(), []);
+  const formatY = useCallback((y: number) => {
+    if (y < 10000) return y.toLocaleString();
+    return `${Math.floor(y / 10000).toLocaleString()} 万`;
+  }, []);
 
   return (
     chartOptions && (
-      <LineChart formatY={formatY} xUnit="年" yUnit="人" {...chartOptions} />
+      <LineChart
+        formatY={formatY}
+        xUnit="年"
+        yUnit="人"
+        minWidth={720}
+        {...chartOptions}
+      />
     )
   );
 });

@@ -28,6 +28,8 @@ interface Props {
   formatY?: (y: number) => string;
   xUnit?: string;
   yUnit?: string;
+  minWidth?: number;
+  minHeight?: number;
 }
 
 export default memo(function LineChart({
@@ -36,6 +38,8 @@ export default memo(function LineChart({
   formatY = (y) => y.toString(),
   xUnit,
   yUnit,
+  minWidth,
+  minHeight,
 }: Props) {
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>();
 
@@ -64,10 +68,9 @@ export default memo(function LineChart({
       title: undefined,
       chart: {
         marginTop: 48,
+        scrollablePlotArea: { minWidth, minHeight },
       },
-      legend: {
-        enabled: false,
-      },
+      legend: { enabled: false },
       xAxis: {
         categories: [...xs],
         title:
@@ -81,9 +84,8 @@ export default memo(function LineChart({
                 style,
               },
         lineWidth: 0,
-        labels: {
-          style,
-        },
+        labels: { style },
+        scrollbar: { enabled: minWidth !== undefined },
       },
       yAxis: {
         title:
@@ -108,6 +110,7 @@ export default memo(function LineChart({
             return formatY(this.value);
           },
         },
+        scrollbar: { enabled: minHeight !== undefined },
       },
       series: series.map(
         ({
@@ -154,7 +157,7 @@ export default memo(function LineChart({
         },
       },
     });
-  }, [xs, series, formatY, xUnit, yUnit]);
+  }, [xs, series, formatY, xUnit, yUnit, minWidth, minHeight]);
 
   return (
     <div className={styles["container"]}>
