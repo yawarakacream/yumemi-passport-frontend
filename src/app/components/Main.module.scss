@@ -1,33 +1,52 @@
+@use "@/app/mq" as *;
+
 .main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas:
+    "prefectures-list"
+    "population-label-selector"
+    "population-graph";
+  grid-template-rows: min-content min-content 1fr;
+  grid-template-columns: 100%;
   gap: 2em;
-  padding: 2em;
+  width: 100%;
+  min-height: 100%;
+  padding: 1em;
+
+  @include mq(md) {
+    padding: 2em;
+  }
 }
 
-.prefecture-list {
+.prefectures-list {
+  grid-area: prefectures-list;
   display: flex;
   align-items: flex-start;
   align-content: space-around;
   flex-wrap: wrap;
   gap: 1em;
-}
 
-.prefecture {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 5em;
-  height: 2.5em;
+  .prefecture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5em;
+    height: 2.5em;
+  }
 }
 
 .population-label-selector-wrapper {
-  width: max-content;
+  grid-area: population-label-selector;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .population-graph-wrapper {
+  grid-area: population-graph;
+  display: flex;
   width: 100%;
-  aspect-ratio: 1 / 0.5;
+  min-height: 512px;
+  max-height: 100%;
 }

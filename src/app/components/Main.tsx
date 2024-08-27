@@ -55,7 +55,7 @@ export default memo(function Main({
 
   return (
     <main className={styles["main"]}>
-      <ul className={styles["prefecture-list"]}>
+      <ul className={styles["prefectures-list"]}>
         {prefectures.map(({ code, name, color, plot }) => (
           <li key={code} className={styles["prefecture"]}>
             <PrefectureButton
