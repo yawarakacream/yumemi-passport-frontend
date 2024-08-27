@@ -4,10 +4,10 @@
 ![CD](https://github.com/yawarakacream/yumemi-passport-frontend/actions/workflows/cd.yml/badge.svg)
 
 人口構成グラフ  
-ゆめみパスポート夏祭り（2024 年）のフロントエンドの答案実装
+ゆめみパスポート夏祭り（フロントエンド・2024 年 8 月）の答案実装
 
 [ゆめみパスポート夏祭り](https://hrmos.co/pages/yumemi/jobs/101000000010)・[フロントエンドコーディング試験](https://yumemi.notion.site/0e9ef27b55704d7882aab55cc86c999d)  
-課題「都道府県別の総人口推移グラフを表示する SPA (Single Page Application) を構築せよ」
+課題「都道府県別の総人口推移グラフを表示する SPA（Single Page Application）を構築せよ」
 
 ## 開発
 
