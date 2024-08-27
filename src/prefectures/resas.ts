@@ -97,7 +97,7 @@ export async function getResasPopulationCompositionPerYear(
   const pcpy = await callResasApi(
     "/api/v1/population/composition/perYear",
     { prefCode, cityCode },
-    1,
+    60 * 60 * 24,
   ); // 1 日間キャッシュ
 
   if (!isResasPopulationCompositionPerYear(pcpy)) {
