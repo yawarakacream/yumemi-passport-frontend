@@ -8,6 +8,8 @@ on:
   schedule:
     - cron: "0 15 * * 6" # 日曜日の 0 時 0 分 (JST)
 
+  pull_request:
+
   workflow_dispatch:
 
 permissions:
