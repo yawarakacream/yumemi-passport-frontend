@@ -6,8 +6,8 @@
     "prefectures-list"
     "population-label-selector"
     "population-graph";
-  grid-template-rows: min-content min-content 1fr;
   grid-template-columns: 100%;
+  grid-template-rows: min-content min-content 1fr;
   gap: 2em;
   width: 100%;
   min-height: 100%;
@@ -20,18 +20,14 @@
 
 .prefectures-list {
   grid-area: prefectures-list;
-  display: flex;
-  align-items: flex-start;
-  align-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5em, auto));
+  grid-auto-rows: 2.5em;
   flex-wrap: wrap;
   gap: 1em;
 
   .prefecture {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 5em;
-    height: 2.5em;
   }
 }
 
