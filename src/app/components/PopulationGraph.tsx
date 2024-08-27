@@ -3,9 +3,9 @@
 import { ComponentProps, memo, useCallback, useEffect, useState } from "react";
 
 import LineChart, { LineChartSeries } from "@/components/LineChart";
+import { PopulationLabel } from "@/prefectures/prefectures";
 import { DeepReadonly } from "@/utilities/typing";
 
-import { PopulationLabel } from "../../prefectures/prefectures";
 import { PrefectureForPlot } from "./Main";
 
 interface Props {

@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from "react";
+
 import Highcharts from "highcharts";
 import "highcharts/css/highcharts.css";
 import { HighchartsReact } from "highcharts-react-official";
